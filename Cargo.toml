@@ -1,0 +1,47 @@
+[package]
+name = "dummy-nfts-cw721"
+version = "0.9.3"
+authors = ["Ethan Frey <ethanfrey@users.noreply.github.com>", "Michael Snoyman <msnoyman@fpcomplete.com>"]
+edition = "2018"
+description = "dummy-specific "
+license = "Apache-2.0"
+repository = "https://github.com/CosmWasm/cw-plus"
+homepage = "https://meteors.dummy.finance"
+
+exclude = [
+  # Those files are rust-optimizer artifacts. You might want to commit them for convenience but they should not be part of the source code publication.
+  "artifacts/*",
+]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+# for more explicit tests, cargo test --features=backtraces
+backtraces = ["cosmwasm-std/backtraces"]
+# use library feature to disable all instantiate/execute/query exports
+library = []
+
+[profile.release]
+codegen-units = 1
+incremental = false
+rpath = false
+lto = true
+overflow-checks = true
+opt-level = 3
+debug = false
+debug-assertions = false
+
+[dependencies]
+cw0 = "0.9.1"
+cw2 = "0.9.1"
+cw-storage-plus = "0.9.1"
+cosmwasm-std = { version = "0.16.0" }
+schemars = "0.8.1"
+serde = { version = "1.0.103", default-features = false, features = ["derive"] }
+thiserror = { version = "1.0.23" }
+
+[dev-dependencies]
+cosmwasm-schema = { version = "0.16.0" }
+quickcheck = "1"
